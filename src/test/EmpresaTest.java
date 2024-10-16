@@ -75,6 +75,7 @@ public class EmpresaTest {
         catch(ChoferRepetidoException ex){
             fail("El chofer ya existe");
         }
+        // esta es una prueba a ver si se guardan los cambios
 
         //catch (Cliente)
         /*
