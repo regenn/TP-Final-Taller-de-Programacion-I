@@ -6,22 +6,20 @@ import org.junit.*;
 import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
-import util.*;
+
 
 //escenario
 public class EmpresaTest {
-
+    Empresa empresa; 
     //setup de una empresa vacia -> instancia=Empresa.getInstance()
     @Before
     public void setUp() throws Exception{
-        //deberia hacer diferentes setups?
-
-
+        empresa = Empresa.getInstance();
     }
     //Al tener un singleton -> en cada metodo Test tengo q limpiar los datos del singleton!! 
     //CADA clase de test se maneja por un escenario especifico. Aunque puede haber mas de una clase usando ese escenario
     //por ahi esta bueno tener metodos que armen escenarios -> public void ArmarEscenario1()
-    //
+    
     @Test
     public void crearViajeTest(){
         Cliente cliente1 = new Cliente("usuario1","pass1","Cliente1");
@@ -29,14 +27,20 @@ public class EmpresaTest {
         Vehiculo auto = new Auto("ABC123",3,true);
         Vehiculo moto = new Moto("ABC124");
         Vehiculo combi = new Combi("ABC125",6,false);
-        Pedido pedido = new Pedido(cliente1,1,true,true,3, "ZONA_STANDARD");
-        Empresa instancia = Empresa.getInstance();
+        
+        //Empresa instancia = Empresa.getInstance();
 
         
-        //como 
+        //how... just.. hoow?
         try{
-            instancia.agregarPedido(pedido);
-           instancia.crearViaje(pedido,chofer,auto);
+            empresa.agregarVehiculo(auto);
+            empresa.agregarVehiculo(moto);
+            empresa.agregarVehiculo(combi);
+            empresa.agregarChofer(chofer);
+            empresa.agregarCliente("usuario1", "pass1", "Cliente1");
+            Pedido pedido = new Pedido(cliente1,1,true,true,3, "ZONA_STANDARD");
+            empresa.agregarPedido(pedido);
+            empresa.crearViaje(pedido,chofer,auto);
         }
         catch (PedidoInexistenteException ex) {
             fail("Excepcion de pedido inexistente lanzada");
@@ -56,6 +60,22 @@ public class EmpresaTest {
         catch (ClienteNoExisteException  ex){
             fail("El cliente no existe");
         }
+        catch(SinVehiculoParaPedidoException ex){
+            fail("No hay ningun vehiculo para ese pedido");
+        }
+        catch (ClienteConPedidoPendienteException ex){
+            fail("El cliente ya tiene un pedido pendiente");
+        }
+        catch (UsuarioYaExisteException ex){
+            fail("Este usuario ya existe");
+        }
+        catch(VehiculoRepetidoException ex){
+            fail("El vehiculo ya ha sido creado");
+        }
+        catch(ChoferRepetidoException ex){
+            fail("El chofer ya existe");
+        }
+
         //catch (Cliente)
         /*
         SinVehiculoParaPedidoException,
