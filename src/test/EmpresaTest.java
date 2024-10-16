@@ -18,7 +18,10 @@ public class EmpresaTest {
 
 
     }
-
+    //Al tener un singleton -> en cada metodo Test tengo q limpiar los datos del singleton!! 
+    //CADA clase de test se maneja por un escenario especifico. Aunque puede haber mas de una clase usando ese escenario
+    //por ahi esta bueno tener metodos que armen escenarios -> public void ArmarEscenario1()
+    //
     @Test
     public void crearViajeTest(){
         Cliente cliente1 = new Cliente("usuario1","pass1","Cliente1");
