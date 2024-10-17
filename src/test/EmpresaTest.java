@@ -11,10 +11,20 @@ import modeloNegocio.*;
 //escenario
 public class EmpresaTest {
     Empresa empresa; 
+    Chofer chofer;
+    Vehiculo auto;
+    Vehiculo moto;
+    Vehiculo combi;
+    
     //setup de una empresa vacia -> instancia=Empresa.getInstance()
     @Before
     public void setUp() throws Exception{
         empresa = Empresa.getInstance();
+        chofer = new ChoferPermanente("documento","chofer1",2023,1);
+        auto = new Auto("ABC123",3,true);
+        moto = new Moto("ABC124");
+        combi = new Combi("ABC125",6,false);
+      
     }
     //Al tener un singleton -> en cada metodo Test tengo q limpiar los datos del singleton!! 
     //CADA clase de test se maneja por un escenario especifico. Aunque puede haber mas de una clase usando ese escenario
@@ -22,23 +32,17 @@ public class EmpresaTest {
     
     @Test
     public void crearViajeTest(){
-        Cliente cliente1 = new Cliente("usuario1","pass1","Cliente1");
-        Chofer chofer = new ChoferPermanente("documento","chofer1",2023,1);
-        Vehiculo auto = new Auto("ABC123",3,true);
-        Vehiculo moto = new Moto("ABC124");
-        Vehiculo combi = new Combi("ABC125",6,false);
-        
+        //Cliente cliente1 = new Cliente("usuario1","pass1","Cliente1");
+        Pedido pedido;
         //Empresa instancia = Empresa.getInstance();
-
-        
         //how... just.. hoow?
         try{
             empresa.agregarVehiculo(auto);
             empresa.agregarVehiculo(moto);
             empresa.agregarVehiculo(combi);
             empresa.agregarChofer(chofer);
-            empresa.agregarCliente("usuario1", "pass1", "Cliente1");
-            Pedido pedido = new Pedido(cliente1,1,true,true,3, "ZONA_STANDARD");
+            empresa.agregarCliente("usuario1","pass1","Cliente1");
+            pedido = new Pedido(empresa.getClientes().get("usuario1"),1,true,true,3, "ZONA_STANDARD");
             empresa.agregarPedido(pedido);
             empresa.crearViaje(pedido,chofer,auto);
         }
