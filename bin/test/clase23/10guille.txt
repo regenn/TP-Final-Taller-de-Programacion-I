@@ -1,0 +1,45 @@
+Para chequear persistencia
+SOLO hay que chequear si guarda y despues levanta todo
+y si forma bien el dto
+NO USAR == 
+    -> porque no es la mismta instancia !! 
+    -> hayq ue chequear a nivel de valor, no a nivel de referencia
+    -> NO verificar que haya agregado a los 500 choferes que tenemos
+    -> SI verificar que alguno en especifico haya sido levantado
+
+Test de integracion
+    Al llegar a la parte de controlador -> login
+    Controlador.login() esta DOCUMENTADO
+    No necesito una centana para testear el controlador, porque controlador necesita un elementi IVista,
+    Interfaz vista, 
+    y hacer que funcione como desee, libremente
+    haciendo un "mooc"
+    
+    -> ESTO ESTA EN EL VIDEO DE GUI DE GUILLE 
+    Vista -> setOptionPane o panel... 
+            Conserva el dato que le estoy pasando 
+    
+    Option 1: que el usuario se loggee realmente
+    Option 2: que el usuario no exista y salga la excepcion de usuarioNoExiste
+    
+Como testeo empresaDTO
+tiene getter setter
+podriamos crear por cada PAR getter y setter...
+
+Clases de equivalencia
+Moto pedido con baul
+Moto pedido con mascota
+Moto pedido con mas de una persona
+Moto pedido valido    
+
+NOTAS PALO 
+persisto un chofer- lo levanto- esta? si? perfecto
+persisto un cliento- lo mismo
+persiste/no persiste
+DTO: funciona/no funciona
+tengo 20 choferes, tengo q verificar q esten los 20? no
+lo agrego? si, cuando lo chequeo (levanto)esta? si--> listo
+objetivo: encontrar errores, no asegurar que no tiene fallos
+test de integracion: cuando atacamos el controlador
+si al controlador le pido q haga logint, el controladorle pide a la ventana los datos del campo de texto(seter de interfaz grafica)
+controlador.setvista(objeto IVIsta); no necesito tener una ventana para testear el controlador, necesito una vista

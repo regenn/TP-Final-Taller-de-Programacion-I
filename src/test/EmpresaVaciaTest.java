@@ -1,4 +1,17 @@
+/*
+LISTA DE TODOS LOS METODOS A TESTEAR
+
+
+DONE        crearViaje(Pedido pedido, Chofer chofer, Vehiculo vehiculo)
+DONE        calificacionDeChofer(Chofer chofer)
+DONE        login(String usserName, String pass)
+PREGUNTA    logout()
+DONE        pagarYFinalizarViaje(int calificacion)
+PREGUNTA    validarPedido(Pedido pedido)
+DONE        vehiculosOrdenadosPorPedido(Pedido pedido)
+*/
 package test;
+
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -7,6 +20,7 @@ import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
 import util.*;
+import java.util.ArrayList;
 
 //Testeo para el caso de empresa vacia.
 public class EmpresaVaciaTest {
@@ -15,7 +29,9 @@ public class EmpresaVaciaTest {
     Pedido pedido;
     Chofer chofer;
     Vehiculo auto;
-
+    
+    // son creados pero no agregados a la empresa
+    //obtenemos las excepciones choferNotDisponible, etc..
 
     @Before
     public void startUp(){
@@ -25,6 +41,7 @@ public class EmpresaVaciaTest {
         chofer = new ChoferPermanente("documento","chofer1",2023,1);
         auto = new Auto("ABC123",3,true);
     }
+
     @Test
     public void calificacionDeChoferTest(){
         try{
@@ -32,6 +49,9 @@ public class EmpresaVaciaTest {
         }
         catch(SinViajesException ex){
             assertEquals(Mensajes.CHOFER_SIN_VIAJES,ex.getMessage());
+        }
+        catch (Exception ex){
+            fail("Excepcion no esperada");
         }
     }
 
@@ -46,7 +66,22 @@ public class EmpresaVaciaTest {
         catch(PasswordErroneaException ex){
             fail("PasswordErroneaException lanzada");
         }
+        catch (Exception ex){
+            fail("Excepcion no esperada");
+        }
     }
+
+    @Test
+    public void logoutTest(){
+        try{
+            empresa.logout();
+        }
+        catch (Exception ex){
+            fail("Excepcion lanzada");
+        }
+        //DUDA:que asserto deberiamos usar???
+    }
+    
 
     //@Test
     // public void logoutTest(){
@@ -85,5 +120,39 @@ public class EmpresaVaciaTest {
         catch (VehiculoNoValidoException ex){
             fail ("El vehiculo no es valido para este pedido");
         } 
+
+        catch (Exception ex){
+            fail("Excepcion no esperada");
+        }
     }
+
+    public void validarPedidoTest(){
+        try{
+            empresa.validarPedido(pedido);
+        }
+        catch (Exception ex){
+            fail("No se pudo validar el pedido");
+        }
+    }
+    
+    public void vehiculosOrdenadosPorPedidoTest(){
+        ArrayList <Vehiculo> listaVehiculos=empresa.vehiculosOrdenadosPorPedido(pedido);
+        assertTrue(listaVehiculos.isEmpty()); //DUDA: la lista que devuelve, sera una lista vacia? 
+    }
+
+    @After
+    public void tearDown(){
+        System.out.println("Runneando: tear down");
+        empresa = Empresa.getInstance();
+        chofer = null;
+        assertNull(chofer);
+        
+        
+        cliente= new Cliente("user1", "pass1", "cliente1");
+        pedido=new Pedido(cliente,3,true,true,3,"ZONA_STANDARD");
+        chofer = new ChoferPermanente("documento","chofer1",2023,1);
+        auto = new Auto("ABC123",3,true);
+    }
+
+
 }
