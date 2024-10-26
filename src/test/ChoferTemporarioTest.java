@@ -24,7 +24,6 @@ public class ChoferTemporarioTest {
     @Test
     public void getSueldoBrutoTest(){
         assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico(),0.0);
-        //DUDA: en la narrativa, no se puede saber el valor exacto del sueldo basico
         //deberiamos testear de esta manera?
     }
     @Test
@@ -41,6 +40,9 @@ public class ChoferTemporarioTest {
     public void getSueldoNeto(){
         assertEquals(chofer.getSueldoNeto(),chofer.getSueldoBruto()*0.86,0.0);
     }
+
+    @After
+    
 
 }
 

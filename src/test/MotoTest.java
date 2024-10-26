@@ -65,12 +65,11 @@ public class MotoTest {
     @Test
     public void getPuntajePedidoTest(){
         try{
-            assertEquals(moto.getPuntajePedido(pedido), 1000);
+            assertEquals(moto.getPuntajePedido(pedido), Integer.valueOf(1000));
             // 1 pasasejo, sin baul y sin mascota == 1000
         }
         catch (Exception ex){
-            fail()
+            fail("getPuntajePedido no funciona correctamente en Moto")
         }
-
     }  
 }
