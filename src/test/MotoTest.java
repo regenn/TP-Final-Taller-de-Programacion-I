@@ -19,7 +19,7 @@ import modeloNegocio.Empresa;
 public class MotoTest {
     Empresa empresa;
     Cliente cliente;
-    Pedido pedido; 
+    Pedido pedido, pedido1, pedido2, pedido3; 
     Chofer chofer;
     Vehiculo moto;
 
@@ -28,6 +28,11 @@ public class MotoTest {
         empresa = Empresa.getInstance();
         cliente= new Cliente("user1", "pass1", "cliente1");
         pedido = new Pedido(cliente,1,false,false,3,"ZONA_STANDARD");
+        pedido1 = new Pedido(cliente,2,false,false,3,"ZONA_STANDARD");
+        pedido2 = new Pedido(cliente,1,true,false,3,"ZONA_STANDARD");
+        pedido3 = new Pedido(cliente,1,false,true,3,"ZONA_STANDARD");
+
+
         chofer = new ChoferPermanente("documento","chofer1",2023,1);
         moto = new Moto("DEF456");
     }
@@ -66,10 +71,44 @@ public class MotoTest {
     public void getPuntajePedidoTest(){
         try{
             assertEquals(moto.getPuntajePedido(pedido), Integer.valueOf(1000));
-            // 1 pasasejo, sin baul y sin mascota == 1000
+            // 1 pasajero, sin baul y sin mascota == 1000
         }
         catch (Exception ex){
             fail("getPuntajePedido no funciona correctamente en Moto");
         }
-    }  
+    }
+
+    @Test
+    public void getPuntajePedido2pasajerosTest(){
+        try{
+            assertEquals(moto.getPuntajePedido(pedido1), null);
+            // 2 pasajeros = null
+        }
+        catch (Exception ex){
+            fail("getPuntajePedido no funciona correctamente en Moto");
+        }
+    }
+
+    @Test
+    public void getPuntajePedidoconMascotaTest(){
+        try{
+            assertEquals(moto.getPuntajePedido(pedido2), null);
+            // 1 pasajero, sin baul y con mascota == null
+        }
+        catch (Exception ex){
+            fail("getPuntajePedido no funciona correctamente en Moto");
+        }
+    }
+    
+    @Test
+    public void getPuntajePedidoconBaulTest(){
+        try{
+            assertEquals(moto.getPuntajePedido(pedido3), null);
+            // 1 pasajero, sin baul y con mascota == null
+        }
+        catch (Exception ex){
+            fail("getPuntajePedido no funciona correctamente en Moto");
+        }
+    }
+    
 }
