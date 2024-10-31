@@ -42,6 +42,10 @@ public class ChoferTemporarioTest {
     }
 
     @After
+    public void tearDown(){
+        chofer=null;
+        assertNull(chofer);
+    }
     
 
 }

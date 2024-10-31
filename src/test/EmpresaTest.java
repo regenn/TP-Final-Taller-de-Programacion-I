@@ -6,6 +6,8 @@ import org.junit.*;
 import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 
 //escenario
@@ -24,6 +26,17 @@ public class EmpresaTest {
         auto = new Auto("ABC123",3,true);
         moto = new Moto("ABC124");
         combi = new Combi("ABC125",6,false);
+
+        empresa.setChoferes(new HashMap<String,Chofer>());
+        empresa.setChoferesDesocupados(new ArrayList<Chofer>());
+        empresa.setClientes(new HashMap<String,Cliente>());
+        empresa.setPedidos(new HashMap<Cliente,Pedido>());
+        empresa.setVehiculos(new HashMap<String,Vehiculo>());
+        empresa.setVehiculosDesocupados(new ArrayList<Vehiculo>());
+        empresa.setViajesIniciados(new HashMap<Cliente,Viaje>());
+        empresa.setViajesTerminados(new ArrayList<Viaje>());
+
+
       
     }
     //Al tener un singleton -> en cada metodo Test tengo q limpiar los datos del singleton!! 
@@ -89,6 +102,23 @@ ClienteConViajePendienteException,
 ClienteConPedidoPendienteException
         */
       
+    }
+
+    @After
+    public void tearDown(){
+
+        combi=null;
+        moto=null;
+        auto=null;
+        chofer=null;
+        empresa.setChoferes(null);
+        empresa.setChoferesDesocupados(null);
+        empresa.setClientes(null);
+        empresa.setPedidos(null);
+        empresa.setVehiculos(null);
+        empresa.setVehiculosDesocupados(null);
+        empresa.setViajesIniciados(null);
+        empresa.setViajesTerminados(null);
     }
 
     /*

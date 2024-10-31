@@ -69,7 +69,7 @@ public class MotoTest {
             // 1 pasasejo, sin baul y sin mascota == 1000
         }
         catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Moto")
+            fail("getPuntajePedido no funciona correctamente en Moto");
         }
     }  
 }

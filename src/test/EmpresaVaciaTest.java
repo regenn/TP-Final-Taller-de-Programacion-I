@@ -21,6 +21,7 @@ import excepciones.*;
 import modeloNegocio.*;
 import util.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 //Testeo para el caso de empresa vacia.
 public class EmpresaVaciaTest {
@@ -40,6 +41,15 @@ public class EmpresaVaciaTest {
         pedido=new Pedido(cliente,3,true,true,3,"ZONA_STANDARD");
         chofer = new ChoferPermanente("documento","chofer1",2023,1);
         auto = new Auto("ABC123",3,true);
+
+        empresa.setChoferes(new HashMap<String,Chofer>());
+        empresa.setChoferesDesocupados(new ArrayList<Chofer>());
+        empresa.setClientes(new HashMap<String,Cliente>());
+        empresa.setPedidos(new HashMap<Cliente,Pedido>());
+        empresa.setVehiculos(new HashMap<String,Vehiculo>());
+        empresa.setVehiculosDesocupados(new ArrayList<Vehiculo>());
+        empresa.setViajesIniciados(new HashMap<Cliente,Viaje>());
+        empresa.setViajesTerminados(new ArrayList<Viaje>());
     }
 
     @Test
@@ -146,12 +156,17 @@ public class EmpresaVaciaTest {
         empresa = Empresa.getInstance();
         chofer = null;
         assertNull(chofer);
+        auto=null;
+        empresa.setChoferes(null);
+        empresa.setChoferesDesocupados(null);
+        empresa.setClientes(null);
+        empresa.setPedidos(null);
+        empresa.setVehiculos(null);
+        empresa.setVehiculosDesocupados(null);
+        empresa.setViajesIniciados(null);
+        empresa.setViajesTerminados(null);
         
         
-        cliente= new Cliente("user1", "pass1", "cliente1");
-        pedido=new Pedido(cliente,3,true,true,3,"ZONA_STANDARD");
-        chofer = new ChoferPermanente("documento","chofer1",2023,1);
-        auto = new Auto("ABC123",3,true);
     }
 
 
