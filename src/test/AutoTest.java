@@ -21,10 +21,10 @@ import modeloNegocio.Empresa;
     //isMascota
     //getPuntajePedido
 
-public class AutoPedidoSinBaulTest {
+public class AutoTest {
     Empresa empresa;
     Cliente cliente;
-    Pedido pedido, pedido2; 
+    Pedido pedido, pedido2, pedido3; 
     Chofer chofer;
     Vehiculo auto;
 
@@ -34,8 +34,9 @@ public class AutoPedidoSinBaulTest {
         cliente= new Cliente("user1", "pass1", "cliente1");
         pedido = new Pedido(cliente,3,true,true,3,"ZONA_STANDARD");
         pedido2 = new Pedido (cliente, 3,true,false,3,"ZONA_STANDARD");
+        pedido3 = new Pedido (cliente, 6, false, false, 3, "ZONA_STANDARD");
         chofer = new ChoferPermanente("documento","chofer1",2023,1);
-        auto = new Auto("ABC123",3,true);
+        auto = new AutoTest("ABC123",3,true);
     }
 
     @Test
@@ -87,5 +88,16 @@ public class AutoPedidoSinBaulTest {
         } catch (Exception ex){
             fail("getPuntajePedido no funciona correctamente");
         }
-    }        
+    } 
+    
+    @Test
+    public void getPuntajePedido6PasajerosTest(){
+        try{
+            assertEquals(auto.getPuntajePedido(pedido3), null);
+            // si la cantPax > 5,  valor = null
+        } catch (Exception ex){
+            fail("getPuntajePedido no funciona correctamente");
+        }
+    } 
 }
+
