@@ -82,11 +82,12 @@ public class CombiTest {
     @Test
     public void getPuntajePedidoTest(){
         try{
-            assertEquals(combi1.getPuntajePedido(pedido), Integer.valueOf(170));
+            assertEquals(Integer.valueOf(170),combi1.getPuntajePedido(pedido));
             // 1 pasajero, sin baul y sin mascota == 1000
         }
         catch (Exception ex){
             fail("getPuntajePedido no funciona correctamente en Moto");
+            
         }
     }
 
@@ -103,7 +104,7 @@ public class CombiTest {
     @Test
     public void getPuntajePedido11pasajerosTest(){
         try{
-            assertEquals(combi1.getPuntajePedido(pedido2), null);
+            assertEquals(null,combi1.getPuntajePedido(pedido2));
             // 11 pasajeros, devuelve null
         }
         catch (Exception ex){

@@ -50,7 +50,7 @@ public class MotoTest {
     @Test
     public void getCantidadPlazasTest(){
         try{
-            assertEquals(moto.getCantidadPlazas(), 3);
+            assertEquals(1,moto.getCantidadPlazas());
         }
         catch (Exception ex){
             fail("getCantidadPlazas no funciona correctamente");

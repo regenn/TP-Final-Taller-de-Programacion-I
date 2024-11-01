@@ -9,5 +9,26 @@ import modeloNegocio.*;
 import util.*;
 
 public class AdministradorTest {
-    
+    Usuario administrador;
+
+    @Before
+    public void startUp(){
+        administrador=Administrador.getInstance();
+    }
+
+    @Test
+    public void getNombreUsuarioTest(){
+        assertEquals("admin",administrador.getNombreUsuario());
+    }
+
+    @Test
+    public void getPassTest(){
+        assertEquals("admin",administrador.getPass());
+    }
+
+    @After
+    public void tearDown(){
+        administrador=null;
+        assertNull(administrador);
+    }
 }

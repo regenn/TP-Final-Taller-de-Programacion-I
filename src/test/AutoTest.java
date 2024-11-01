@@ -36,7 +36,7 @@ public class AutoTest {
         pedido2 = new Pedido (cliente, 3,true,false,3,"ZONA_STANDARD");
         pedido3 = new Pedido (cliente, 6, false, false, 3, "ZONA_STANDARD");
         chofer = new ChoferPermanente("documento","chofer1",2023,1);
-        auto = new AutoTest("ABC123",3,true);
+        auto = new Auto("ABC123",3,true);
     }
 
     @Test
