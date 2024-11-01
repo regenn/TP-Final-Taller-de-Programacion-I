@@ -19,26 +19,33 @@ public class ChoferTemporarioTest {
     @Before
     public void startUp(){
         System.out.println("Runneando: startUp");
-        chofer=new ChoferTemporario("dni","nombre");
+        chofer=new ChoferTemporario("123456","nombreChofer");
     }
     @Test
     public void getSueldoBrutoTest(){
-        assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico(),0.0);
+        assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico(),0.001);
         //deberiamos testear de esta manera?
     }
     @Test
     public void getDniTest(){
-        assertEquals(chofer.getDni(),"dni");
+        assertEquals(chofer.getDni(),"123456");
     }
 
     @Test
     public void getNombreTest(){
-        assertEquals(chofer.getNombre(),"nombre");
+        assertEquals(chofer.getNombre(),"nombreChofer");
     }
 
     @Test
     public void getSueldoNeto(){
-        assertEquals(chofer.getSueldoNeto(),chofer.getSueldoBruto()*0.86,0.0);
+        assertEquals(chofer.getSueldoNeto(),chofer.getSueldoBruto()*0.86,0.001);
+    }
+
+    @Test
+    public void getSueldoBasicoTest(){
+        assertEquals(Constantes.SUELDO_DE_CHOFER,Chofer.getSueldoBasico());
+
+
     }
 
     @After

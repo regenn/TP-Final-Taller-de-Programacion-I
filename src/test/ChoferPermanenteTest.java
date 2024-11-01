@@ -32,19 +32,19 @@ public class ChoferPermanenteTest {
     @Before
     public void startUp(){
         System.out.println("Runneando: startUp");
-        chofer=new ChoferPermanente("dni","nombre",2022,2);
+        chofer=new ChoferPermanente("12345","nombreChofer",2024,2);
     }
 
     @Test
     public void getAnioIngresoTest(){
-        assertEquals(2,chofer.getAnioIngreso());
+        assertEquals(2024,chofer.getAnioIngreso());
     }
 
     @Test
     public void getAntiguedadTest(){
         //ATENCION IMPORTANTE si esto tira error es pq el anio actual no es 2024 PROBABLY
         //no lo encontre en ninguna parte tbh
-        assertEquals(2024-chofer.getAnioIngreso(),chofer.getAntiguedad());
+        assertEquals(0,chofer.getAntiguedad());
     }
 
     @Test
@@ -54,17 +54,19 @@ public class ChoferPermanenteTest {
     
     @Test
     public void getSueldoBrutoTest(){
-        assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico(),0.0);
+        Chofer choferaux=new ChoferPermanente("123457","nombreChofer2",2020,0);
+        assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico()*1.14,0.001);
+        assertEquals(choferaux.getSueldoBruto(),Chofer.getSueldoBasico()*1.2,0.001);
         //deberiamos testear de esta manera?
     }
     @Test
     public void getDniTest(){
-        assertEquals(chofer.getDni(),"dni");
+        assertEquals(chofer.getDni(),"12345");
     }
 
     @Test
     public void getNombreTest(){
-        assertEquals(chofer.getNombre(),"nombre");
+        assertEquals(chofer.getNombre(),"nombreChofer");
     }
 
     @Test
