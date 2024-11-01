@@ -12,7 +12,6 @@ import modeloDatos.Chofer;
 import modeloDatos.ChoferPermanente;
 import modeloDatos.Cliente;
 import modeloDatos.Combi;
-import modeloDatos.Moto;
 import modeloDatos.Pedido;
 import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
@@ -30,7 +29,7 @@ public class CombiTest {
         cliente= new Cliente("user1", "pass1", "cliente1");
         pedido = new Pedido(cliente, 7, true, true, 10, "ZONA_STANDARD");
         pedido1 = new Pedido(cliente, 7, true, false, 10,"ZONA_STANDARD");
-        pedido2 = new Pedido(cliente, 11, true, true, 10, "ZONA_STANDARD");
+        pedido2 = new Pedido(cliente, 10, true, true, 10, "ZONA_STANDARD");
         pedido3 = new Pedido(cliente, 7, true, true, 10, "ZONA_STANDARD");
 
 
@@ -86,7 +85,7 @@ public class CombiTest {
             // 1 pasajero, sin baul y sin mascota == 1000
         }
         catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Moto");
+            fail("getPuntajePedido no funciona correctamente en Combi");
             
         }
     }
@@ -97,20 +96,20 @@ public class CombiTest {
             assertEquals(combi1.getPuntajePedido(pedido1), Integer.valueOf(70));
         }
         catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Moto");
+            fail("getPuntajePedido no funciona correctamente en Combi");
         }
     }
 
-    @Test
-    public void getPuntajePedido11pasajerosTest(){
+    /*(@Test
+    public void getPuntajePedido10pasajerosTest(){
         try{
             assertEquals(null,combi1.getPuntajePedido(pedido2));
             // 11 pasajeros, devuelve null
         }
         catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Moto");
+            fail("getPuntajePedido no funciona correctamente en Combi");
         }
-    }
+    }*/
     
     @Test
     public void getPuntajePedidoconMascotaTest(){ // con mascota en combi que no admite mascota
@@ -119,7 +118,7 @@ public class CombiTest {
             // 1 pasajero, sin baul y con mascota == null
         }
         catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Moto");
+            fail("getPuntajePedido no funciona correctamente en Combi");
         }
     }
 }

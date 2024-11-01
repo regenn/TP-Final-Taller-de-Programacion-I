@@ -83,7 +83,7 @@ public class AutoTest {
     @Test
     public void getPuntajePedidoSinBaulTest(){
         try{
-            assertEquals(auto.getPuntajePedido(pedido2), Integer.valueOf(30 * 3));
+            assertEquals(Integer.valueOf(30 * 3) , auto.getPuntajePedido(pedido2));
             //si solicita uso de baul, valor = 40 * cantPasajeros
         } catch (Exception ex){
             fail("getPuntajePedido no funciona correctamente");
