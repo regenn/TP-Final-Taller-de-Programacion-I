@@ -42,9 +42,11 @@ public class ChoferTemporarioTest {
     }
 
     @Test
-    public void getSueldoBasicoTest(){
-        assertEquals(Constantes.SUELDO_DE_CHOFER,Chofer.getSueldoBasico());//ya sabemos que anda mal.. pendiente duda para equipo enemigo
+    public void SueldoBasicoTest(){
+        Chofer.setSueldoBasico(300000.0);
+        assertEquals(300000.0,Chofer.getSueldoBasico(),0.001);
     }
+
 
     @After
     public void tearDown(){

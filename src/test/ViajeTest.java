@@ -70,45 +70,61 @@ public class ViajeTest {
     public void getValorSinAsfaltarTest(){
         Pedido pedido2= new Pedido(cliente,3,false,false,5,Constantes.ZONA_SIN_ASFALTAR);
         Viaje viaje2=new Viaje(pedido2,chofer,vehiculo);
-        assertEquals(2350.0,viaje2.getValor(),0.001);
+        assertEquals(Viaje.getValorBase()*2.35,viaje2.getValor(),0.001);
     }
 
     @Test
     public void getValorPeligrosaTest(){
         Pedido pedido3= new Pedido(cliente,3,false,false,5,Constantes.ZONA_PELIGROSA);
         Viaje viaje3=new Viaje(pedido3,chofer,vehiculo);
-        assertEquals(2300.0,viaje3.getValor(),0.001);
+        assertEquals(Viaje.getValorBase()*2.3,viaje3.getValor(),0.001);
     }
 
     @Test
     public void getValorStandarBaulTest(){
         Pedido pedido4= new Pedido(cliente,3,false,true,5,Constantes.ZONA_STANDARD);
         Viaje viaje4=new Viaje(pedido4,chofer,vehiculo);
-        assertEquals(2350.0,viaje4.getValor(),0.001);
+        assertEquals(Viaje.getValorBase()*2.35,viaje4.getValor(),0.001);
     }
 
     @Test
     public void getValorStandarMascotaTest(){
         Pedido pedido5= new Pedido(cliente,3,true,false,5,Constantes.ZONA_STANDARD);
         Viaje viaje5=new Viaje(pedido5,chofer,vehiculo);
-        assertEquals(3100.0,viaje5.getValor(),0.001);
+        assertEquals(Viaje.getValorBase()*3.1,viaje5.getValor(),0.001);
     }
 
     @Test
     public void getValorPeligrosaMascotaTest(){
         Pedido pedido6=new Pedido(cliente,3,true,false,5,Constantes.ZONA_PELIGROSA);
         Viaje viaje6=new Viaje(pedido6,chofer,vehiculo);
-        assertEquals(3600.0,viaje6.getValor(),0.001);
-
-        
+        assertEquals(Viaje.getValorBase()*3.6,viaje6.getValor(),0.001);   
     }
 
     @Test
     public void getValorSinAsfaltarBaulTest(){
         Pedido pedido7= new Pedido(cliente,3,false,true,5,Constantes.ZONA_SIN_ASFALTAR);
         Viaje viaje7=new Viaje(pedido7,chofer,vehiculo);
-        assertEquals(2900.0,viaje7.getValor(),0.001);
+        assertEquals(Viaje.getValorBase()*2.9,viaje7.getValor(),0.001);
     }
+
+    @Test
+    public void setValorBaseTest(){
+        Viaje.setValorBase(3500.5);
+        assertEquals(3500.5,Viaje.getValorBase(),0.001);
+    }
+
+    @After
+    public void tearDown(){
+        Viaje.setValorBase(1000.0);
+        cliente=null;
+        pedido=null;
+        chofer=null;
+        vehiculo=null;
+        viaje=null;
+        assertNull(viaje);
+    }
+
 
 }
 

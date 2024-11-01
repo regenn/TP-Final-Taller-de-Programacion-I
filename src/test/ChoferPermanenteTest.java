@@ -74,6 +74,12 @@ public class ChoferPermanenteTest {
         assertEquals(chofer.getSueldoNeto(),chofer.getSueldoBruto()*0.86,0.0);
     }
 
+    @Test
+    public void setCantidadHijosTest(){
+        chofer.setCantidadHijos(3);
+        assertEquals(3,chofer.getCantidadHijos());
+    }
+
     @After
     public void tearDown(){
         chofer=null;

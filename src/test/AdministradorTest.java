@@ -17,6 +17,12 @@ public class AdministradorTest {
     }
 
     @Test
+    public void getInstanceTest(){
+        Administrador auxiliar=Administrador.getInstance();
+        assertEquals(administrador,auxiliar);
+    }
+
+    @Test
     public void getNombreUsuarioTest(){
         assertEquals("admin",administrador.getNombreUsuario());
     }
