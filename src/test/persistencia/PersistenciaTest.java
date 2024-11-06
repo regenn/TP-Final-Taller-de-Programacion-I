@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.Assert;
+import persistencia.EmpresaDTO;
 import persistencia.PersistenciaBIN;
 
 public class PersistenciaTest {
@@ -74,7 +75,7 @@ public class PersistenciaTest {
 			persistencia.cerrarInput();
 		}
         catch(IOException ex){
-     		("Tiene que generar esta excepcion en este caso")
+     		("Tiene que generar esta excepcion en este caso");
 		}
 	}
 
@@ -85,6 +86,44 @@ public class PersistenciaTest {
 			persistencia.cerrarOutput();
 		} catch (IOException e) {
 			fail("no tendria que lanzar una excepcion");
+		}
+	}
+
+	@Test
+	public void LeerTest() {
+		try{
+			persistencia.abrirInput("archivo.bin");
+			EmpresaDTO empresa;
+			empresa = (EmpresaDTO) persistencia.leer();
+		}
+		catch (Exception e){
+			fail("No tendría que lanzar una excepcion");
+		}
+	}
+
+	@Test 
+	public void LeerFallidoTest(){ //archivo sin abrir
+		try{
+			EmpresaDTO empresa;
+			empresa = (EmpresaDTO) persistencia.leer();
+		}
+		catch (IOException e){
+			//TODO:pass(,e.getCause()); // como lo escribimos??
+		}
+		catch (Exception e){
+			fail("No tendria que lanzar una excepcion que no sea IOException");
+		}
+	}
+
+	@Test
+	public void testEscribir(){ //TODO:pregntar si hay que testear en archivo no vacio tmb
+		EmpresaDTO empresa = new EmpresaDTO();
+		try{
+			persistencia.abrirOutput("archivo.bin");
+			persistencia.escribir(empresa);
+		}
+		catch(Exception e){
+			fail("No deberia lanzar ninguna excepcion");
 		}
 	}
 

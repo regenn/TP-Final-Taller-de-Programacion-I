@@ -1,4 +1,4 @@
-package test.modelo;
+package test;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -71,7 +71,8 @@ public class EmpresaTest {
     
     @After
     public void tearDown(){
-        //TODO: limpiar la empresa.       
+        //TODO: limpiar la empresa.
+        
     }
     @Test
     public void agregarChoferTest(){

@@ -10,7 +10,7 @@ DONE        pagarYFinalizarViaje(int calificacion)
 PREGUNTA    validarPedido(Pedido pedido)
 DONE        vehiculosOrdenadosPorPedido(Pedido pedido)
 */
-package test;
+package test.modelo;
 
 
 import static org.junit.Assert.*;
