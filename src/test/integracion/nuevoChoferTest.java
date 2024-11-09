@@ -17,23 +17,7 @@ import util.Mensajes;
 import test.GUI.FalsoOptionPane;
 import vista.Ventana;//??
 
-/*
-
-Se invoca al metodo agregarChofer(Chofer chofer) de la clase Empresa con los parametros obtenidos del atributo vista:
-String tipo = this.vista.getTipoChofer()
-String nombre = this.vista.getNombreChofer()
-String dni = this.vista.getDNIChofer();
-Si tipo== Constantes.TEMPORARIO se agrega un chofer temporario con los parametros "dni" y "nombre"
-Si tipo== Constantes.PERMANENTE
-int anio = this.vista.getAnioChofer()
-int hijos = this.vista.getHijosChofer()
-se agrega un chofer permanente con los parametros "dni", "nombre", "anio" e "hijos"
-Luego se actualiza la vista
-Si la accion no se puede realizar porque el dni esta repetido entonces se delega en el atributo vista mostrar el mensaje correspondiente a la excepcion ChoferRepetidoException lanzada
-
- */
-
-public class nuevoChoferTest {
+public class NuevoChoferTest {
     Empresa empresa;
     Controlador controlador;
     Chofer choferTemp,choferPerm;

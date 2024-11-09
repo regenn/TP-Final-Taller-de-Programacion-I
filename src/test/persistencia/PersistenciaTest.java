@@ -1,6 +1,6 @@
 package test.persistencia;
 
-import static.org.junit.Assert.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class PersistenciaTest {
 			persistencia.cerrarInput();
 		}
         catch(IOException ex){
-     		("Tiene que generar esta excepcion en este caso");
+     		fail("Tiene que generar esta excepcion en este caso");
 		}
 	}
 

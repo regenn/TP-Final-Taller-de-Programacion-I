@@ -10,7 +10,7 @@ import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
 import java.util.HashMap;
-import java.util.ArrayList;
+
 import controlador.*;
 import util.Mensajes;
 import test.GUI.FalsoOptionPane;
@@ -26,7 +26,7 @@ public class LoginTest {
         empresa=Empresa.getInstance();
         empresa.setClientes(new HashMap<String,Cliente>());
         controlador= new Controlador();
-        usuariologeado=new Usuario("usuario1","contrasenia1");
+        usuariologeado=new Cliente("usuario1","contrasenia1","nombre1");
     }
 
     @After

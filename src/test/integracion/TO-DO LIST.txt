@@ -1,0 +1,23 @@
+METODOS DE CONTROLADOR:
+por cada metodo, testear que funcione
+
+-void actionPerformed(ActionEvent e)
+//DONE-void calificarPagar() reginald
+-void escribir() 
+//DONE-String getFileName()palo
+//DONE-Ipersistencia getPersistencia() reginald
+-IVista getVista() reginald
+-void leer()
+//DONE -void login()
+//DONE-void logout()palo
+//DONE -void nuevoChofer() 
+//DONE -void nuevoPedido() ro
+//done void nuevoVehiculo() ro
+//DONE -void nuevoViaje() ro
+//DONE-void registrar() reginald
+//DONE-void setFileName(String fileName)palo
+//DONE-void setPersistencia(IPersistencia persistencia) palo
+
+-void setVista(IVista vista) ro
+
+later: por cada metodo realizar un diagrama

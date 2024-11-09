@@ -13,7 +13,7 @@ Constantes.NUEVO_VEHICULO se invoca a nuevoVehiculo()
 Constantes.NUEVO_VIAJE se invoca a nuevoViaje()
 Cualquier otro valor es ignorado.
 
- */
+
 package test.integracion;
 
 import static org.mockito.Mockito.*;
@@ -59,7 +59,7 @@ import java.awt.event.*;
         ActionEvent eventLogin = new ActionEvent(new JButton(), ActionEvent.ACTION_PERFORMED,Constantes.LOGIN);
         controlador.actionPerformed(eventLogin);
         Usuario clienteLogueado = empresa.getUsuarioLogeado();
-        assertEquals(clienteLogueado.getPass(), )
+        assertEquals(clienteLogueado.getPass(),controlador.getVista().getPassword());
    
     }
 
@@ -69,7 +69,7 @@ import java.awt.event.*;
         controlador.actionPerformed(eventLogout);
         controlador.getVista().get
         Cliente cliente = new Cliente("Cliente1","pass","Cliente1");
-        a
+        
     }
 
     @Test
@@ -80,3 +80,4 @@ import java.awt.event.*;
         Administrador admin = Administrador.getInstance();
     }
  }
+     */
