@@ -17,16 +17,6 @@ import persistencia.*;
 
 public class EmpresaDTOTest {
     
-    @Before
-    public void setUp() throws Exception{
-
-    }
-
-    @After
-    public void tearDown() throws Exception{
-
-    }
-
     @Test
     public void testEscenarioNoVacio(){
         try{
