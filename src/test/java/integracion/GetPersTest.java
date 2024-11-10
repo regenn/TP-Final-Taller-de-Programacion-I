@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.mockito.Mockito.*;
 

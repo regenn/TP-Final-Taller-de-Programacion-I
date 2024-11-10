@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import controlador.*;
 import util.Constantes;
 import util.Mensajes;
-import test.java.GUI.FalsoOptionPane;
 import vista.Ventana;//??
 
 public class NuevoChoferTest {
@@ -27,9 +26,9 @@ public class NuevoChoferTest {
     public void setUp() throws Exception{
         empresa=Empresa.getInstance();
         empresa.setChoferes(new HashMap<String,Chofer>());
-        /* 
+        
         controlador= new Controlador();
-        choferTemp=new ChoferTemporario("123455778","chofer");
+        /*choferTemp=new ChoferTemporario("123455778","chofer");
         choferPerm=new ChoferPermanente("1234566","nombre2",2023,2);
         */
     }
@@ -43,6 +42,7 @@ public class NuevoChoferTest {
     public void nuevoChoferTempExitosoTest(){   
         try{
             Ventana ventana= mock(Ventana.class);
+            when(ventana.getUssername())
             when(ventana.getTipoChofer()).thenReturn(Constantes.TEMPORARIO);
             when(ventana.getNombreChofer()).thenReturn("choferTemp");
             when(ventana.getDNIChofer()).thenReturn("123456778");

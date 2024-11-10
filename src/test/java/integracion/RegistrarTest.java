@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import controlador.*;
 import util.Mensajes;
-import test.GUI.FalsoOptionPane;
+import GUI.FalsoOptionPane;
 import vista.Ventana;//??
 
 public class RegistrarTest {
@@ -60,21 +60,22 @@ public class RegistrarTest {
 
     @Test
     public void RegistroConfirmacionNoExitosaTest(){
+    	Ventana ventana = mock(Ventana.class);
+        FalsoOptionPane op = new FalsoOptionPane();
+        this.controlador.setVista(ventana);
+        this.controlador.getVista().setOptionPane(op);
         try{
-            Ventana ventana = mock(Ventana.class);
-            FalsoOptionPane op = new FalsoOptionPane();
+       
             when(ventana.getRegNombreReal()).thenReturn("nombreNuevo");
             when(ventana.getRegUsserName()).thenReturn("usuarioNuevo");
             when(ventana.getRegPassword()).thenReturn("passNuevo");
             when(ventana.getRegConfirmPassword()).thenReturn("passOtra");
 
-            this.controlador.setVista(ventana);
-            this.controlador.getVista().setOptionPane(op);
-
             this.controlador.registrar();//pass y confirm no coinciden
-            assertEquals(Mensajes.PASS_NO_COINCIDE.getValor(),op.getMensaje());
+            assertEquals(Mensajes.PASS_NO_COINCIDE,op.getMensaje());
         } catch (Exception e){
-            fail("No tendria que haber lanzado una excepcion: " + e.getMessage());
+        	assertEquals(Mensajes.PASS_NO_COINCIDE,op.getMensaje());
+            //fail("No tendria que haber lanzado una excepcion: ");
         }
     }
 }

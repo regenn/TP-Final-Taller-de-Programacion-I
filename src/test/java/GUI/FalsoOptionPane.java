@@ -1,4 +1,4 @@
-package test.java.GUI;
+package GUI;
 import vista.IOptionPane;
 
 public class FalsoOptionPane implements IOptionPane {
