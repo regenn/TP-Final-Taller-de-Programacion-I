@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -12,11 +12,12 @@ import modeloNegocio.*;
 import java.util.HashMap;
 import controlador.*;
 import util.Mensajes;
-import test.GUI.FalsoOptionPane;
-import test.GUI.TestUtils;
+import GUI.FalsoOptionPane;
+import GUI.TestUtils;
 import vista.Ventana;//??
 import util.Constantes;
 
+//CORREGIDO
 public class GetFileNameTest {
     Empresa empresa;
     Controlador controlador;
@@ -24,7 +25,7 @@ public class GetFileNameTest {
 
     @Before
     public void setUp(){
-        empresa= new getInstance();
+        empresa= Empresa.getInstance();
         controlador= new Controlador();
     }
 

@@ -1,9 +1,9 @@
-package test.java.integracion;
+package integracion;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;
@@ -13,9 +13,10 @@ import java.util.HashMap;
 
 import controlador.*;
 import util.Mensajes;
-import test.GUI.FalsoOptionPane;
-import vista.Ventana;//??
+import GUI.FalsoOptionPane;
+import vista.Ventana;
 
+//bien
 public class SetFileNameTest {
     Empresa empresa;
     Controlador controlador;

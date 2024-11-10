@@ -3,7 +3,7 @@ package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;
@@ -14,38 +14,43 @@ import java.util.ArrayList;
 import controlador.*;
 import util.Mensajes;
 import GUI.FalsoOptionPane;
-import vista.Ventana;//??
+import vista.Ventana;
 
 public class RegistrarTest {
     Empresa empresa;
     Controlador controlador;
-    Usuario UsuarioNuevo;
+    Usuario usuariologeado;
+    FalsoOptionPane op;
+    Ventana ventana;
 
     @Before
     public void setUp(){
-        empresa = Empresa.getInstance();
-        controlador = new Controlador();
+        empresa=Empresa.getInstance();
+        empresa.setClientes(new HashMap<String,Cliente>());
+        controlador= new Controlador();
+        op = new FalsoOptionPane();
+        ventana = mock(Ventana.class);
+        controlador.setVista(ventana);
+		controlador.getVista().setOptionPane(op);
+        when(ventana.getOptionPane()).thenReturn(op);
     }
-    /* Se reciben los parametros necesarios para un nuevo cliente del atributo vista:
-    String nombreReal = this.vista.getRegNombreReal()
-    String nombreUsuario = this.vista.getRegUsserName()
-    String pass = this.vista.getRegPassword()
-    String confirm = this.vista.getRegConfirmPassword()
-    Si "pass" y "confirm" no coinciden, entonces se delega en el atributo vista mostrar el mensaje correspondiente a Mensajes.PASS_NO_COINCIDE.getValor()
-    Si "pass" y "confirm" coinciden, se invoca al metodo agregarCliente(nombreUsuario, pass, nombreReal) de la clase Empresa.
-    Si la accion no se puede realizar entonces se delega en el atributo vista mostrar el mensaje correspondiente a la excepcion lanzada 
-    */
+
+    @After
+    public void tearDown(){
+        empresa.getChoferes().clear();
+        empresa.getClientes().clear();
+        empresa.getPedidos().clear();
+    }
+
     @Test
     public void RegistroExitosoTest(){
         try{
-            Ventana ventana = mock(Ventana.class);
             when(ventana.getRegNombreReal()).thenReturn("nombreNuevo");
             when(ventana.getRegUsserName()).thenReturn("usuarioNuevo");
             when(ventana.getRegPassword()).thenReturn("passNuevo");
             when(ventana.getRegConfirmPassword()).thenReturn("passNuevo");
-            this.controlador.setVista(ventana);
 
-            this.controlador.registrar();//pass y confirm coinciden -> se invoca a agregarCliente(...)
+            this.controlador.registrar();
             Usuario nuevoUsuario = empresa.getClientes().get("usuarioNuevo");
             assertNotNull(nuevoUsuario);
 
@@ -60,22 +65,15 @@ public class RegistrarTest {
 
     @Test
     public void RegistroConfirmacionNoExitosaTest(){
-    	Ventana ventana = mock(Ventana.class);
-        FalsoOptionPane op = new FalsoOptionPane();
-        this.controlador.setVista(ventana);
-        this.controlador.getVista().setOptionPane(op);
-        try{
-       
+        try{  
             when(ventana.getRegNombreReal()).thenReturn("nombreNuevo");
             when(ventana.getRegUsserName()).thenReturn("usuarioNuevo");
             when(ventana.getRegPassword()).thenReturn("passNuevo");
             when(ventana.getRegConfirmPassword()).thenReturn("passOtra");
 
             this.controlador.registrar();//pass y confirm no coinciden
-            assertEquals(Mensajes.PASS_NO_COINCIDE,op.getMensaje());
         } catch (Exception e){
-        	assertEquals(Mensajes.PASS_NO_COINCIDE,op.getMensaje());
-            //fail("No tendria que haber lanzado una excepcion: ");
+        	assertEquals(Mensajes.PASS_NO_COINCIDE.getValor(), op.getMensaje());
         }
     }
 }

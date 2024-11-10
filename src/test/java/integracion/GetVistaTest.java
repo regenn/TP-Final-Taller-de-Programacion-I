@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.mockito.Mockito.*;
 
@@ -9,7 +9,7 @@ import modeloDatos.*;
 //import Utils.MockUtils;
 import excepciones.*;
 import modeloNegocio.*;
-import test.GUI.FalsoOptionPane;
+import GUI.FalsoOptionPane;
 import util.Constantes;
 
 import java.util.HashMap;
@@ -23,6 +23,7 @@ import java.awt.event.*;
 
 import vista.Ventana;
 
+//CORREGIDO
 public class GetVistaTest{
     Empresa empresa;
     Controlador controlador;

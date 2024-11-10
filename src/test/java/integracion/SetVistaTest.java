@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 
 import static org.mockito.Mockito.*;
 
@@ -10,7 +10,7 @@ import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
 import persistencia.PersistenciaBIN;
-import test.GUI.FalsoOptionPane;
+import GUI.FalsoOptionPane;
 import util.Constantes;
 
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import java.awt.event.*;
 
 import vista.Ventana;
 
+//bien
 public class SetVistaTest {
     Empresa empresa;
     Controlador controlador;

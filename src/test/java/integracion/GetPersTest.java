@@ -10,7 +10,7 @@ import modeloDatos.*;
 import excepciones.*;
 import modeloNegocio.*;
 import persistencia.PersistenciaBIN;
-import test.GUI.FalsoOptionPane;
+import GUI.FalsoOptionPane;
 import util.Constantes;
 
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import java.awt.event.*;
 
 import vista.Ventana;
 
+//CORREGIDO
 public class GetPersTest {
     Empresa empresa;
     Controlador controlador;

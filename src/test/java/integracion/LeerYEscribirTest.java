@@ -1,9 +1,10 @@
-package test.java.integracion;
+package integracion;
 import static org.mockito.Mockito.*;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
+import GUI.FalsoOptionPane;
 import modeloDatos.*;
 //import Utils.MockUtils;
 import excepciones.*;
@@ -20,24 +21,36 @@ import java.util.ArrayList;
 import controlador.*;
 import java.awt.event.*;
 
+//CORREGIDO
 public class LeerYEscribirTest {
     Empresa empresa;
     Controlador controlador;
+    Ventana ventana;
+    FalsoOptionPane op;
 
     @Before
     public void setUp(){
+
         empresa = Empresa.getInstance();
         controlador = new Controlador();
-
-
+        ventana= mock(Ventana.class);
+        op = new FalsoOptionPane();
+        this.controlador.setVista(ventana);
+        this.controlador.getVista().setOptionPane(op);
+        when(ventana.getOptionPane()).thenReturn(op);
+    }
+    
+    @After
+    public void tearDown(){
+        empresa.getChoferes().clear();
+        empresa.getClientes().clear();
+        empresa.getPedidos().clear();
     }
 
     @Test
     public void leerYEscribirTest(){
          try{
             
-            Ventana ventana= mock(Ventana.class);
-            this.controlador.setVista(ventana);
             Vehiculo auto = new Auto("ABC123", 4, true);
             empresa.agregarVehiculo(auto);
 
@@ -45,6 +58,8 @@ public class LeerYEscribirTest {
             this.controlador.leer();
 
             Vehiculo vehiculoPersistido = empresa.getVehiculos().get("ABC123");
+            assertNotNull(vehiculoPersistido);
+
             assertEquals("ABC123",vehiculoPersistido.getPatente());
             assertEquals(4,vehiculoPersistido.getCantidadPlazas());
             assertEquals(true, vehiculoPersistido.isMascota());

@@ -1,4 +1,4 @@
-package test.java.integracion;
+package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -11,48 +11,61 @@ import modeloNegocio.*;
 import java.util.HashMap;
 import controlador.*;
 import util.Mensajes;
-import test.GUI.FalsoOptionPane;
-import test.GUI.TestUtils;
+import GUI.FalsoOptionPane;
+import GUI.TestUtils;
 import vista.Ventana;//??
 import util.Constantes;
 
 import javax.swing.JPanel;
+
 public class LogoutTest {
     Empresa empresa;
     Controlador controlador;
     Usuario usuariologeado;
+    FalsoOptionPane op;
+    Ventana ventana;
+    JPanel panelLogin;
+
     @Before
-     public void setUp() throws Exception{ //y el catch?
+    public void setUp(){
+
         empresa=Empresa.getInstance();
-        empresa.setClientes(new HashMap<String,Cliente>());
         controlador= new Controlador();
+        op = new FalsoOptionPane();
+        ventana = mock(Ventana.class);
+        controlador.setVista(ventana);
+		controlador.getVista().setOptionPane(op);
+        when(ventana.getOptionPane()).thenReturn(op);
+
         usuariologeado= new Cliente("usuario1","contrasenia1","Cliente1");
-    }   
-
-    @After
-    public void tearDown() throws Exception{
-     //necesitaria algo que me borre los usuarios
-    }
-
-    @Test
-    public void LogoutUsuarioExitosoTest(){
-        JPanel panelLogin;
-        FalsoOptionPane op= new FalsoOptionPane();
         try{
             empresa.agregarCliente("usuario1","contrasenia1","nombre");
             usuariologeado= this.empresa.login("usuario1","contrasenia1");
             this.empresa.setUsuarioLogeado(usuariologeado);
         }
-        catch(Exception e){
+        catch(Exception e){}
 
-        }
-        Ventana ventana= mock(Ventana.class);
-        this.controlador.setVista(ventana);
-        this.controlador.getVista().setOptionPane(op);
+        when(ventana.getUsserName()).thenReturn("usuario1");
+        when(ventana.getPassword()).thenReturn("contrasenia1");
+        this.controlador.login();
+
+    }
+
+    @After
+    public void tearDown(){
+        empresa.getChoferes().clear();
+        empresa.getClientes().clear();
+        empresa.getPedidos().clear();
+    }
+
+    @Test
+    public void LogoutUsuarioExitosoTest(){
+        assertNotNull(empresa.getUsuarioLogeado());
         this.controlador.logout();
+        assertNull(empresa.getUsuarioLogeado());
         //assertTrue("Deberia abrirse un nuevo panel de inicio de sesion",.isEnabled());
-        panelLogin = (JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(),Constantes.PANEL_LOGIN);//
-		Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
+        //panelLogin = (JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(),Constantes.PANEL_LOGIN);//
+		//Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
         //Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
     }
 }
