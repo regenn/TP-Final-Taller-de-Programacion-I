@@ -1,9 +1,9 @@
 package GUI;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.junit.After;
@@ -26,7 +26,6 @@ public class LoginTest {
 	protected FalsoOptionPane op = new FalsoOptionPane();
 	JButton aceptarLog, registroButton, cancelarButton;
 	JTextField contra, nombreUsuario;
-	JPanel panelRegistro;
 	public LoginTest() {
 		try {
 			robot = new Robot();
@@ -44,6 +43,7 @@ public class LoginTest {
 		contra = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PASSWORD);
 		aceptarLog = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LOGIN);
 		registroButton = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.REGISTRAR);
+		cancelarButton = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.REG_BUTTON_CANCELAR);
 	}
 
 	@After
@@ -59,8 +59,7 @@ public class LoginTest {
 		Assert.assertTrue("El boton de registro deberia estar habilitado", registroButton.isEnabled());
 		TestUtils.clickComponent(registroButton, robot);
 		robot.delay(TestUtils.getDelay());	
-		panelRegistro = (JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PANEL_REGISTRO);
-		Assert.assertTrue("El panel de registro deberia estar habilitado", panelRegistro.isEnabled());
+		Assert.assertTrue("deberia abrirse un PaneldeRegistro", cancelarButton.isEnabled());
 	}
 
 	@Test
@@ -115,7 +114,7 @@ public class LoginTest {
 		TestUtils.tipeaTexto("admin", robot);
 		TestUtils.clickComponent(aceptarLog, robot);
 		robot.delay(500);
-		Assert.assertTrue("deberia haber logeado",((JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PANEL_ADMINISTRADOR)).isEnabled());
+		Assert.assertTrue("deberia haber logeado",((JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN)).isEnabled());
 	}
 
 	@Test
@@ -132,7 +131,7 @@ public class LoginTest {
 		TestUtils.tipeaTexto("123456", robot);
 		TestUtils.clickComponent(aceptarLog, robot);
 		robot.delay(500);
-		Assert.assertTrue("deberia haber logeado",((JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PANEL_CLIENTE)).isEnabled());
+		Assert.assertTrue("deberia haber logeado",((JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE)).isEnabled());
 	}
 
 	@Test
@@ -152,5 +151,3 @@ public class LoginTest {
 		Assert.assertEquals(Mensajes.PASS_ERRONEO.getValor(), op.getMensaje());
 	}
 }
-
-

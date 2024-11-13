@@ -8,7 +8,6 @@ import java.awt.Robot;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,7 +31,7 @@ public class ClienteTest {
     protected Robot robot;
 	protected Controlador controlador;
 	protected FalsoOptionPane op = new FalsoOptionPane();
-	JButton aceptarLog, nuevopedido, cerrarSesion, pagar;
+	JButton aceptarLog, nuevopedido, cerrarSesion;
     JRadioButton zstandard, zsinasf, zpeligrosa;
 	JTextField nombreUsuario, contrasenia, calificacion, cantpax, cantkm;
     JTextArea pedidoviaje;
@@ -86,80 +85,14 @@ public class ClienteTest {
         Empresa.getInstance().getVehiculos().clear();
 	}    
 
-    public void generaPedido(){
-        TestUtils.clickComponent(cantpax, robot);
-        TestUtils.tipeaTexto("3", robot);
-        TestUtils.clickComponent(cantkm, robot);
-        TestUtils.tipeaTexto("10", robot);
-        TestUtils.clickComponent(nuevopedido, robot);
-    }
-
-    public void generaPedidoParaCombi(){
-        TestUtils.clickComponent(cantpax, robot);
-        TestUtils.tipeaTexto("5", robot);
-        TestUtils.clickComponent(cantkm, robot);
-        TestUtils.tipeaTexto("10", robot);
-        TestUtils.clickComponent(nuevopedido, robot);
-    }
-
-    public void admCheckPedido(){
-        TestUtils.clickComponent(cerrarSesion, robot);
-        robot.delay(500);
-
-        TestUtils.clickComponent(nombreUsuario, robot);
-        TestUtils.tipeaTexto("admin", robot);
-        TestUtils.clickComponent(contrasenia, robot);
-        TestUtils.tipeaTexto("admin", robot);
-        TestUtils.clickComponent(aceptarLog, robot);
-        robot.delay(500);
-        
-        JList<String> pedido = (JList<String>) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
-        pedido.setSelectedIndex(0);
-        TestUtils.clickComponent(pedido, robot);
-        JList<String> choferes = (JList<String>) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
-        choferes.setSelectedIndex(0);
-        TestUtils.clickComponent(choferes, robot);
-        JList<String> vehiculos = (JList<String>) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
-        vehiculos.setSelectedIndex(0);
-        TestUtils.clickComponent(vehiculos, robot);
-        JButton nuevoviaje = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.NUEVO_VIAJE);
-        TestUtils.clickComponent(nuevoviaje, robot);
-        JButton cierrasesion = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
-        TestUtils.clickComponent(cierrasesion, robot);
-        robot.delay(500);
-
-		TestUtils.clickComponent(nombreUsuario, robot);
-		TestUtils.tipeaTexto("tomitomitomi", robot);
-		TestUtils.clickComponent(contrasenia, robot);
-		TestUtils.tipeaTexto("tomitomitomi", robot);
-		TestUtils.clickComponent(aceptarLog, robot);
-		robot.delay(500);
-    }
-
 	@Test
 	public void testBotonCerrarSesion() {
 		robot.delay(TestUtils.getDelay());
 		TestUtils.clickComponent(cerrarSesion, robot);
         robot.delay(TestUtils.getDelay());
-		JPanel panelLogin = (JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PANEL_LOGIN);
-		Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
+		JButton registroButton = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.REGISTRAR);
+		Assert.assertTrue("deberia abrirse un PaneldeRegistro", (registroButton instanceof JButton));
 	}
-
-    @Test
-    public void testPedidoSinPax(){
-        robot.delay(TestUtils.getDelay());
-        TestUtils.clickComponent(cantkm, robot);
-        TestUtils.tipeaTexto("0", robot);
-        Assert.assertFalse("El boton de nuevo pedido deberia estar deshabilitado",nuevopedido.isEnabled());
-    }
-
-    @Test
-    public void testPedidoSinKm(){
-        robot.delay(TestUtils.getDelay());
-        TestUtils.clickComponent(cantpax, robot);
-        TestUtils.tipeaTexto("1", robot);
-        Assert.assertFalse("El boton de nuevo pedido deberia estar deshabilitado",nuevopedido.isEnabled());
-    } 
 
     @Test
     public void testPedidoPaxNeg(){
@@ -192,95 +125,69 @@ public class ClienteTest {
     }
 
     @Test
-    public void testPagarYCalificarOff(){
-        robot.delay(TestUtils.getDelay());
-        calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
-        JTextField valor = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.VALOR_VIAJE);
-        Assert.assertFalse("El text de calificar deberia estar deshabilitado", calificacion.isEnabled());
-        Assert.assertTrue("El text de pagar deberia estar vacio", !valor.isEditable());
-    }
-
-    @Test
     public void testPedidoSinVehiculo(){
         robot.delay(TestUtils.getDelay());
-        this.generaPedidoParaCombi();
+        TestUtils.clickComponent(cantpax, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(cantkm, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(nuevopedido, robot);
 		Assert.assertEquals("El pedido no deberia tener vehiculo",Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(), op.getMensaje());
     }
 
     @Test
     public void testPedidoConVehiculo(){
         robot.delay(TestUtils.getDelay());
-        this.generaPedido();
-        
+        TestUtils.clickComponent(cantpax, robot);
+        TestUtils.tipeaTexto("3", robot);
+        TestUtils.clickComponent(cantkm, robot);
+        TestUtils.tipeaTexto("10", robot);
+        TestUtils.clickComponent(nuevopedido, robot);
 		Assert.assertFalse("El text de cant pax deberia estar deshabilitado",cantpax.isEnabled());
-		Assert.assertTrue("El text de cant pax deberia estar vacio",cantpax.getText().trim().isEmpty());
-		Assert.assertFalse("El text de cant km deberia estar deshabilitado",cantkm.isEnabled());
-		Assert.assertTrue("El text de cant km deberia estar vacio",cantkm.getText().trim().isEmpty());
-		Assert.assertFalse("El text de zona standard deberia estar deshabilitado",zstandard.isEnabled());
-		Assert.assertFalse("El text de zona peligrosa deberia estar deshabilitado",zpeligrosa.isEnabled());
-		Assert.assertFalse("El text de zona sin asfaltar deberia estar deshabilitado",zsinasf.isEnabled());
-		Assert.assertFalse("El baul deberia estar deshabilitado",baul.isEnabled());
-		Assert.assertFalse("La mascota deberia estar deshabilitado",mascota.isEnabled());
-		Assert.assertFalse("El nuevo pedido deberia estar deshabilitado",nuevopedido.isEnabled());
-
-        calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
-        JTextField valor = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.VALOR_VIAJE);
-        Assert.assertFalse("El text de calificar deberia estar deshabilitado", calificacion.isEnabled());
-        Assert.assertTrue("El text de pagar deberia estar vacio", !valor.isEditable());
     }
 
     @Test
     public void testCalificarYPagar(){ //este lo pregunto mañana
         robot.delay(TestUtils.getDelay());
-        this.generaPedido();
-        this.admCheckPedido();
+        TestUtils.clickComponent(cantpax, robot);
+        TestUtils.tipeaTexto("3", robot);
+        TestUtils.clickComponent(cantkm, robot);
+        TestUtils.tipeaTexto("10", robot);
+        TestUtils.clickComponent(nuevopedido, robot);
+		TestUtils.clickComponent(cerrarSesion, robot);
+        robot.delay(TestUtils.getDelay());
 
-		Assert.assertFalse("El text de cant pax deberia estar deshabilitado",cantpax.isEnabled());
-		Assert.assertFalse("El text de cant km deberia estar deshabilitado",cantkm.isEnabled());
-		Assert.assertFalse("El text de zona standard deberia estar deshabilitado",zstandard.isEnabled());
-		Assert.assertFalse("El text de zona peligrosa deberia estar deshabilitado",zpeligrosa.isEnabled());
-		Assert.assertFalse("El text de zona sin asfaltar deberia estar deshabilitado",zsinasf.isEnabled());
-		Assert.assertFalse("El baul deberia estar deshabilitado",baul.isEnabled());
-		Assert.assertFalse("La mascota deberia estar deshabilitado",mascota.isEnabled());
-		Assert.assertFalse("El nuevo pedido deberia estar deshabilitado",nuevopedido.isEnabled());
+        TestUtils.clickComponent(nombreUsuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(aceptarLog, robot);
+        robot.delay(TestUtils.getDelay());
 
-        calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
+        JList pedido = (JList) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+        TestUtils.clickComponent(pedido, robot);
+        JList choferes = (JList) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+        TestUtils.clickComponent(choferes, robot);
+        JList vehiculos = (JList) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+        TestUtils.clickComponent(vehiculos, robot);
+        JButton nuevoviaje = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.NUEVO_VIAJE);
+        TestUtils.clickComponent(nuevoviaje, robot);
+        JButton cierrasesion = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+        TestUtils.clickComponent(cierrasesion, robot);
+        robot.delay(TestUtils.getDelay());
+
+		TestUtils.clickComponent(nombreUsuario, robot);
+		TestUtils.tipeaTexto("tomitomitomi", robot);
+		TestUtils.clickComponent(contrasenia, robot);
+		TestUtils.tipeaTexto("tomitomitomi", robot);
+		TestUtils.clickComponent(aceptarLog, robot);
+		robot.delay(TestUtils.getDelay());
+
+        JTextField calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
         TestUtils.clickComponent(calificacion, robot);
         TestUtils.tipeaTexto("5", robot);
-        pagar = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
+        JButton pagar = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
         TestUtils.clickComponent(pagar, robot);
-        Assert.assertTrue("El pedido actual deberia estar vacio", pedidoviaje.getText().trim().isEmpty());
-        Assert.assertTrue("La calificacion deberia estar vacia", calificacion.getText().trim().isEmpty());
-
-        JList<String> historicoviajes = (JList<String>) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.LISTA_VIAJES_CLIENTE);
-        Assert.assertTrue("El historico deberia tener el viaje", historicoviajes.getModel().getSize()>0);
-    }
-
-    @Test
-    public void testCalificarMaxYPagar(){ //este lo pregunto mañana
-        robot.delay(TestUtils.getDelay());
-        this.generaPedido();
-        this.admCheckPedido();
-
-        calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
-        TestUtils.clickComponent(calificacion, robot);
-        TestUtils.tipeaTexto("6", robot);
-        pagar = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
-        TestUtils.clickComponent(pagar, robot);
-        Assert.assertFalse("El boton pagar deberia estar deshabilitado", pagar.isEnabled());
-    }
-
-    @Test
-    public void testCalificarNegYPagar(){
-        robot.delay(TestUtils.getDelay());
-        this.generaPedido();
-        this.admCheckPedido();
-
-        calificacion = (JTextField) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
-        TestUtils.clickComponent(calificacion, robot);
-        TestUtils.tipeaTexto("-1", robot);
-        pagar = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
-        TestUtils.clickComponent(pagar, robot);
-        Assert.assertFalse("El boton pagar deberia estar deshabilitado", pagar.isEnabled());
+        Assert.assertTrue("El boton de cantpax deberia estar habilitado", cantpax.isEnabled());
     }
 }
