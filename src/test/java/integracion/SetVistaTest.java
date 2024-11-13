@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 import modeloDatos.*;
-//import Utils.MockUtils;
 import excepciones.*;
 import modeloNegocio.*;
 import persistencia.PersistenciaBIN;
@@ -24,7 +23,6 @@ import java.awt.event.*;
 
 import vista.Ventana;
 
-//bien
 public class SetVistaTest {
     Empresa empresa;
     Controlador controlador;

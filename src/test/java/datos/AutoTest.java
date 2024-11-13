@@ -1,4 +1,4 @@
-package test.java.datos;
+package datos;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -16,10 +16,6 @@ import modeloDatos.Pedido;
 import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
 
-//getPatente
-    //getCantidadPlazas
-    //isMascota
-    //getPuntajePedido
 
 public class AutoTest {
     Empresa empresa;

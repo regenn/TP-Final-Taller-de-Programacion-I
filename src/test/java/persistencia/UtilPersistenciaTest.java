@@ -1,4 +1,4 @@
-package test.java.persistencia;
+package persistencia;
 
 import java.util.ArrayList;
 import java.util.HashMap;

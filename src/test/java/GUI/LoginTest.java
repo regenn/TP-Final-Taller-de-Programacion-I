@@ -1,4 +1,4 @@
-package test.java.GUI;
+package GUI;
 
 import java.awt.AWTException;
 import java.awt.Robot;

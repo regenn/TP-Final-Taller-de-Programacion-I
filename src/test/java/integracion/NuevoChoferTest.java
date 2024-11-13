@@ -3,7 +3,7 @@ package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;
@@ -51,15 +51,12 @@ public class NuevoChoferTest {
     @Test 
     public void nuevoChoferTempExitosoTest(){   
         try{
-            //empresa.agregarCliente("usuario1","contrasenia1","nombre");
-            //when(ventana.getUssername());
             when(ventana.getTipoChofer()).thenReturn(Constantes.TEMPORARIO);
             when(ventana.getNombreChofer()).thenReturn("choferTemp");
 
             when(ventana.getDNIChofer()).thenReturn("123456778");
 
-            this.controlador.nuevoChofer(); // tendria que haber llammado a empresa.agregarChofer();
-            // comparar el dni agregado con el dni del chofer cuto nombre es choferTemp
+            this.controlador.nuevoChofer();
         
             Chofer choferAgregado = empresa.getChoferes().get("123456778");
             assertNotNull(choferAgregado);
@@ -94,8 +91,7 @@ public class NuevoChoferTest {
             fail("No tendria que haber lanzado una excepcion: " + e.getMessage());
         }
     }
-    
-    /* este error surge en la ventana y se propaga en integracion
+
     @Test 
     public void nuevoChoferFailTest(){   
         try{
@@ -105,14 +101,13 @@ public class NuevoChoferTest {
             when(ventana.getNombreChofer()).thenReturn("choferTemp");
             when(ventana.getDNIChofer()).thenReturn("123456");
 
-            this.controlador.nuevoChofer(); // tendria que haber llammado a empresa.agregarChofer();
-            // comparar el dni agregado con el dni del chofer cuto nombre es choferTemp
+            this.controlador.nuevoChofer();
+
             fail("Tendria que haber lanzado una excepcion");
         } catch (ChoferRepetidoException e){
-            assertEquals(Mensajes.CHOFER_YA_REGISTRADO,e.getMessage());
+            assertEquals(Mensajes.CHOFER_YA_REGISTRADO.getValor(),e.getMessage());
         } catch (Exception e){
             fail("No lanzo la excepcion adecuada. " + e.getMessage());
         }
-    } */
-    
+    }
 }

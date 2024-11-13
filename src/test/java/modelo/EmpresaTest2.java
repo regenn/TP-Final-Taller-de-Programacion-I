@@ -1,16 +1,16 @@
-package test.java.modelo;
+package modelo;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
 import modeloDatos.*;
-//import Utils.MockUtils;
 import excepciones.*;
 import modeloNegocio.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 import util.*;
 
+//Escenario donde hay mas de un cliente, mas de un auto, mas de un pedido y un chofer de cada tipo. Se crean pedidos y viajes.
 public class EmpresaTest2 {
     Empresa empresa;
 
@@ -26,7 +26,6 @@ public class EmpresaTest2 {
     @Before
     public void setUp(){
 
-        //clientes=new HashMap<String,Cliente>();
         choferes=new HashMap<String,Chofer>();
         vehiculos=new HashMap<String,Vehiculo>();
 
@@ -34,28 +33,10 @@ public class EmpresaTest2 {
         choferTemp = new ChoferTemporario("12345","nombreChofer");
         choferPerm = new ChoferPermanente("12346","nombreChofer2", 2023, 2);
 
-        //choferes.put("12345",choferTemp);
-        //choferes.put("12346",choferPerm);
-
-       // empresa.setChoferes(choferes);
-
         auto = new Auto("abc123", 4, false);
         auto2 = new Auto("abc1238",4, false);
         moto = new Moto("abc3456");
-
-        //vehiculos.put("123-456",moto);
-        //vehiculos.put("234-567",auto);
-        //vehiculos.put("345-678",combi);
-
-        //cliente1=new Cliente("cliente1","pass","cliente1");
-        //clientes.put("usuario",cliente1);
-
-        //cliente2=new Cliente("cliente2","pass","cliente2");
-        //clientes.put("usuario",cliente2);
-
-        //cliente3=new Cliente("cliente3","pass","cliente3");
-        //clientes.put("usuario",cliente3);
-        
+   
         cliente4=new Cliente("cliente4","pass","cliente44");
 
         try{
@@ -69,43 +50,18 @@ public class EmpresaTest2 {
             empresa.agregarChofer(choferTemp);
 
         }catch (Exception ex){}
-        
-
-        //empresa.setClientes(clientes);
-        
+   
         pedido1= new Pedido(empresa.getClientes().get("cliente1"),3,false,false,10,Constantes.ZONA_STANDARD);
         pedido2= new Pedido(empresa.getClientes().get("cliente1"),3,true,false,10,Constantes.ZONA_STANDARD);//ningun vehiculo cubre
         pedido3= new Pedido(cliente4,3,false,false,10,Constantes.ZONA_STANDARD);// cliente no existe
         pedido4= new Pedido(empresa.getClientes().get("cliente1"),3,false,false,10,Constantes.ZONA_STANDARD);
         pedido5= new Pedido(empresa.getClientes().get("cliente1"),3,false,false,2,Constantes.ZONA_STANDARD);//no va en la lista.
         pedido6= new Pedido(empresa.getClientes().get("cliente2"),3,false,false,10,Constantes.ZONA_STANDARD);
-
-        //try{
-        //    empresa.agregarPedido(pedido1);
-        //}
-        //catch(Exception ex){}
-        //empresa.agregarPedido(pedido2);
-        //empresa.agregarPedido(pedido3);
-        //empresa.agregarPedido(pedido4);
-       // empresa.agregarPedido(pedido6);
-
-        //empresa.setVehiculos(vehiculos);
-    
-        /*try{
-            empresa.agregarChofer(choferPerm);
-            empresa.agregarChofer(choferTemp);
-            empresa.agregarVehiculo(moto);
-            empresa.agregarVehiculo(auto);
-            empresa.agregarVehiculo(combi);
-            empresa.agregarCliente("usuario","pass","nombreCliente");
-        }
-        catch(Exception ex){
-            fail("No deberia tirar una excepcion");
-        }*/
     }
     
     @After
     public void tearDown(){
+        
         empresa.getPedidos().clear();
         empresa.getChoferes().clear();
         empresa.getClientes().clear();
@@ -206,10 +162,12 @@ public class EmpresaTest2 {
             fail("Tendria que haberse lanzado una excepcion");
         }
         catch(ClienteConViajePendienteException ex){
-            
+          
         }
         catch(Exception ex){
-            fail(ex.getMessage());
+            ClienteConViajePendienteException exep = new ClienteConViajePendienteException();
+            assertEquals(ex.getClass(), exep.getClass());
+            //fail(ex.getMessage());
         }
     }
 
@@ -374,7 +332,6 @@ public class EmpresaTest2 {
     public void getViajesIniciadosExitosoTest(){
         assertEquals(0,empresa.getViajesIniciados().size());
         //para testear que el hashmap esté vacio, no deberiamos tener ningun viaje iniciado
-        //habria un viaje iniciado para cliente1 supuestamente
     }
 
     @Test

@@ -86,7 +86,7 @@ public class NuevoViajeTest {
             empresa.agregarChofer(choferTemp);
             Vehiculo auto = new Auto("ABC123", 3, false);
             empresa.agregarVehiculo(auto);
-            Pedido pedido = new Pedido(cliente1, 3, true, false, 10, Constantes.ZONA_STANDARD);
+            Pedido pedido = new Pedido(cliente1, 3, true, true, 10, Constantes.ZONA_STANDARD);
             empresa.agregarPedido(pedido);
     
             when(ventana.getPedidoSeleccionado()).thenReturn(pedido);
@@ -95,8 +95,9 @@ public class NuevoViajeTest {
             this.controlador.nuevoViaje();
 
             fail("Tendria que haber lanzado una excepcion");
+            
         } catch (Exception e) {
-            assertEquals(Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(), e.getMessage());
+            assertEquals(Mensajes.VEHICULO_NO_VALIDO.getValor(), e.getMessage());
         }
 
     }

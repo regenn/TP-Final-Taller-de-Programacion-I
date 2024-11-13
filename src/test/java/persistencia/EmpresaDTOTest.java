@@ -1,4 +1,4 @@
-package test.java.persistencia;
+package persistencia;
 
 import static org.junit.Assert.*;
 
@@ -12,8 +12,6 @@ import excepciones.*;
 import modeloNegocio.*;
 import util.*;
 import persistencia.*;
-
-
 
 public class EmpresaDTOTest {
     

@@ -1,9 +1,5 @@
-package test.java.datos;
-/*
-METODOS A TESTEAR:
+package datos;
 
-getSueldoNeto()
-*/ 
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -24,7 +20,6 @@ public class ChoferTemporarioTest {
     @Test
     public void getSueldoBrutoTest(){
         assertEquals(chofer.getSueldoBruto(),Chofer.getSueldoBasico(),0.001);
-        //deberiamos testear de esta manera?
     }
     @Test
     public void getDniTest(){

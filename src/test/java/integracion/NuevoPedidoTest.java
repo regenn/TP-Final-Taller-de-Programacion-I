@@ -3,7 +3,7 @@ package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;
@@ -80,7 +80,7 @@ public class NuevoPedidoTest {
     }
     
     @Test
-    public void nuevoPedidoFallidoTest(){ // falla porque ningun vehiculo puede tomarlo
+    public void nuevoPedidoFallidoTest(){
         try{
             cliente = (Cliente) empresa.getUsuarioLogeado();
             assertNotNull(cliente);

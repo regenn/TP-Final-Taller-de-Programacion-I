@@ -6,7 +6,7 @@ import org.junit.*;
 
 import GUI.FalsoOptionPane;
 import modeloDatos.*;
-//import Utils.MockUtils;
+
 import excepciones.*;
 import modeloNegocio.*;
 import util.Constantes;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import controlador.*;
 import java.awt.event.*;
 
-//CORREGIDO
+
 public class LeerYEscribirTest {
     Empresa empresa;
     Controlador controlador;
@@ -45,6 +45,7 @@ public class LeerYEscribirTest {
         empresa.getChoferes().clear();
         empresa.getClientes().clear();
         empresa.getPedidos().clear();
+        empresa.getVehiculos().clear();
     }
 
     @Test

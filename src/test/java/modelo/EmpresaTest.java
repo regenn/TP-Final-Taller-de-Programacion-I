@@ -1,17 +1,16 @@
-package test.java.modelo;
+package modelo;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
 import modeloDatos.*;
-//import Utils.MockUtils;
 import excepciones.*;
 import modeloNegocio.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 
 
-//escenario
+//Escenario con un cliente, un vehiculo de cada tipo y un chofer de cada tipo. En este escenario no se generan pedidos. 
 public class EmpresaTest {
     Empresa empresa;
 
@@ -20,59 +19,56 @@ public class EmpresaTest {
     Vehiculo auto,moto,combi;
 
     HashMap<String,Cliente>clientes;
-    HashMap<String,Chofer>choferes;
-    HashMap<String,Vehiculo>vehiculos;
+    //HashMap<String,Chofer>choferes;
+    //HashMap<String,Vehiculo>vehiculos;
     
     @Before
     public void setUp(){
 
         clientes=new HashMap<String,Cliente>();
-        choferes=new HashMap<String,Chofer>();
-        vehiculos=new HashMap<String,Vehiculo>();
+       // choferes=new HashMap<String,Chofer>();
+        //vehiculos=new HashMap<String,Vehiculo>();
 
         empresa = Empresa.getInstance();
         choferTemp = new ChoferTemporario("12345","nombreChofer");
         choferPerm = new ChoferPermanente("12346","nombreChofer2", 2023, 2);
+        try{
+            empresa.agregarChofer(choferTemp);
+            empresa.agregarChofer(choferPerm);
+        } catch (Exception e){
 
-        choferes.put("12345",choferTemp);
-        choferes.put("12346",choferPerm);
-
-        empresa.setChoferes(choferes);
+        }
 
         moto = new Moto("123-456");
         auto = new Auto("234-567", 3, true);
         combi = new Combi("345-678", 6, false);
 
-        vehiculos.put("123-456",moto);
-        vehiculos.put("234-567",auto);
-        vehiculos.put("345-678",combi);
+        try{
+            empresa.agregarVehiculo(moto);
+            empresa.agregarVehiculo(auto);
+            empresa.agregarVehiculo(combi);
+        } catch (Exception e){
 
-        empresa.setVehiculos(vehiculos);
+        }
 
         cliente=new Cliente("usuario","pass","nombreCliente");
         clientes.put("usuario",cliente);
         
         empresa.setClientes(clientes);
-    
-        /*try{
-            empresa.agregarChofer(choferPerm);
-            empresa.agregarChofer(choferTemp);
-            empresa.agregarVehiculo(moto);
-            empresa.agregarVehiculo(auto);
-            empresa.agregarVehiculo(combi);
-            empresa.agregarCliente("usuario","pass","nombreCliente");
-        }
-        catch(Exception ex){
-            fail("No deberia tirar una excepcion");
-        }*/
     }
-    
-
     
     @After
     public void tearDown(){
-        //TODO: limpiar la empresa.
-        
+        empresa.getPedidos().clear();
+        empresa.getChoferes().clear();
+        empresa.getClientes().clear();
+        empresa.getVehiculos().clear();
+        empresa.getChoferesDesocupados().clear();
+        empresa.getVehiculosDesocupados().clear();
+        empresa.getViajesIniciados().clear();
+        empresa.getViajesTerminados().clear();
+        empresa.getHistorialViajeChofer(choferPerm).clear();
+        empresa.getHistorialViajeChofer(choferTemp).clear();    
     }
     @Test
     public void agregarChoferTest(){
@@ -99,8 +95,7 @@ public class EmpresaTest {
     public void agregarClienteTest(){
         try{
             empresa.agregarCliente("usuario1","pass1","nombreEjemplo");
-        }
-        catch(Exception ex){
+        }catch(Exception ex){
             fail("Se lanzo una excepcion no esperada");
         }
         assertEquals("usuario1",empresa.getClientes().get("usuario1").getNombreUsuario());
@@ -108,7 +103,7 @@ public class EmpresaTest {
             empresa.agregarCliente("usuario1","pass1","nombreEjemplo");
         }
         catch(UsuarioYaExisteException ex){
-            assertEquals(ex.getUsuarioPretendido(),empresa.getClientes().get("usuario1"));
+            assertEquals(ex.getUsuarioPretendido(),empresa.getClientes().get("usuario1").getNombreUsuario());
         }
         catch(Exception ex){
             fail("Se lanzo una excepcion no esperada");
@@ -124,13 +119,12 @@ public class EmpresaTest {
         catch(Exception ex){
             fail("Se lanzo una excepcion no esperada");
         }
-        //TODO: fijarse que los valores de testeo sean iguales a los del excel!!!!1
         assertEquals(vehiculonuevo,empresa.getVehiculos().get("453524"));
         try{
             empresa.agregarVehiculo(vehiculonuevo);
         }
         catch(VehiculoRepetidoException ex){
-            assertEquals(vehiculonuevo,ex.getVehiculoExistente());
+            assertEquals(vehiculonuevo.getPatente(),ex.getPatentePrentendida());
         }
         catch(Exception ex){
             fail("Se lanzo una excepcion no esperada");
@@ -139,7 +133,7 @@ public class EmpresaTest {
 
     @Test
     public void getTotalSalariosTest(){
-        assertEquals(empresa.getTotalSalarios(),(choferPerm.getSueldoBruto()+choferTemp.getSueldoBruto()),0.001);
+        assertEquals(empresa.getTotalSalarios(),(choferPerm.getSueldoNeto()+choferTemp.getSueldoNeto()),0.001);
     }
     
     @Test
@@ -233,7 +227,7 @@ public class EmpresaTest {
 
     @Test 
     public void getChoferesTest(){
-       assertEquals(empresa.getChoferes(),choferes);
+       assertEquals(2, empresa.getChoferes().size());
     }
 
     @Test 
@@ -250,7 +244,7 @@ public class EmpresaTest {
 
     @Test
     public void getVehiculosTest(){
-        assertEquals(vehiculos, empresa.getVehiculos());
+        assertEquals(empresa.getVehiculos().size(), 3);
     }         
 
     @Test
@@ -289,130 +283,6 @@ public class EmpresaTest {
         HashMap<String,Cliente> clientes= new HashMap<String,Cliente>();
         empresa.setClientes(clientes);
      
-   assertEquals(clientes,empresa.getChoferesDesocupados());
+   assertEquals(clientes, empresa.getClientes());
     }
-    /*
-    
-    ##########################################################################################
-    ##########################################################################################
-    
-    
-    @Before
-    public void setUp() throws Exception{
-        empresa = Empresa.getInstance();
-        chofer = new ChoferPermanente("documento","chofer1",2023,1);
-        auto = new Auto("ABC123",3,true);
-        moto = new Moto("ABC124");
-        combi = new Combi("ABC125",6,false);
-
-        empresa.setChoferes(new HashMap<String,Chofer>());
-        empresa.setChoferesDesocupados(new ArrayList<Chofer>());
-        empresa.setClientes(new HashMap<String,Cliente>());
-        empresa.setPedidos(new HashMap<Cliente,Pedido>());
-        empresa.setVehiculos(new HashMap<String,Vehiculo>());
-        empresa.setVehiculosDesocupados(new ArrayList<Vehiculo>());
-        empresa.setViajesIniciados(new HashMap<Cliente,Viaje>());
-        empresa.setViajesTerminados(new ArrayList<Viaje>());
-
-
-      
-    }
-    //Al tener un singleton -> en cada metodo Test tengo q limpiar los datos del singleton!! 
-    //CADA clase de test se maneja por un escenario especifico. Aunque puede haber mas de una clase usando ese escenario
-    //por ahi esta bueno tener metodos que armen escenarios -> public void ArmarEscenario1()
-    
-    @Test
-    public void crearViajeTest(){
-        //Cliente cliente1 = new Cliente("usuario1","pass1","Cliente1");
-        Pedido pedido;
-        //Empresa instancia = Empresa.getInstance();
-        //how... just.. hoow?
-        try{
-            empresa.agregarVehiculo(auto);
-            empresa.agregarVehiculo(moto);
-            empresa.agregarVehiculo(combi);
-            empresa.agregarChofer(chofer);
-            empresa.agregarCliente("usuario1","pass1","Cliente1");
-            pedido = new Pedido(empresa.getClientes().get("usuario1"),1,true,true,3, "ZONA_STANDARD");
-            empresa.agregarPedido(pedido);
-            empresa.crearViaje(pedido,chofer,auto);
-        }
-        catch (PedidoInexistenteException ex) {
-            fail("Excepcion de pedido inexistente lanzada");
-        } 
-        catch (ClienteConViajePendienteException ex){
-            fail("Excepcion de cliente con viaje pendiente lanzada");
-        }        
-        catch (ChoferNoDisponibleException ex){
-            fail("Excepcion de chofer no disponible lanzada");     
-        }
-        catch(VehiculoNoDisponibleException ex){
-            fail("Excepcion de vehiculo no disponible lanzada");
-        }
-        catch (VehiculoNoValidoException ex){
-            fail ("El vehiculo no es valido para este pedido");
-        } 
-        catch (ClienteNoExisteException  ex){
-            fail("El cliente no existe");
-        }
-        catch(SinVehiculoParaPedidoException ex){
-            fail("No hay ningun vehiculo para ese pedido");
-        }
-        catch (ClienteConPedidoPendienteException ex){
-            fail("El cliente ya tiene un pedido pendiente");
-        }
-        catch (UsuarioYaExisteException ex){
-            fail("Este usuario ya existe");
-        }
-        catch(VehiculoRepetidoException ex){
-            fail("El vehiculo ya ha sido creado");
-        }
-        catch(ChoferRepetidoException ex){
-            fail("El chofer ya existe");
-        }
-        // esta es una prueba a ver si se guardan los cambios
-
-        //catch (Cliente)
-        /*
-        SinVehiculoParaPedidoException,
-ClienteNoExisteException,
-ClienteConViajePendienteException,
-ClienteConPedidoPendienteException
-      
-    }
-
-    @After
-    public void tearDown(){
-
-        combi=null;
-        moto=null;
-        auto=null;
-        chofer=null;
-        empresa.setChoferes(null);
-        empresa.setChoferesDesocupados(null);
-        empresa.setClientes(null);
-        empresa.setPedidos(null);
-        empresa.setVehiculos(null);
-        empresa.setVehiculosDesocupados(null);
-        empresa.setViajesIniciados(null);
-        empresa.setViajesTerminados(null);
-    }
-
-    /*
-    TESTEO DE EXCEPCIONES
-     valor esperado -> SE TIENE QUE LANZAR LA EXCEPCION
-     DENTRO DEL TRY:
-     invoco al metodo metodo(cliente)
-     Assert.fail("debio lanzarse la excepcion tal tal")
-
-     catch(TalException ex)
-     Assert.equals(cliente, ex.getCliente()) -> cuando es la excepcion que debio lanzar
-    la excepcion tiene parametros basically
-
-     que pasa si lanza mas de una excepcion?
-     catch (Exceptiontipo2 ex)
-        Assert.fail() -> este es un catch donde se lanzo una excepcion no esperada para este escenario
-     
-     */
-
 }

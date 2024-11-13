@@ -1,16 +1,4 @@
-/*
-LISTA DE TODOS LOS METODOS A TESTEAR
-
-
-DONE        crearViaje(Pedido pedido, Chofer chofer, Vehiculo vehiculo)
-DONE        calificacionDeChofer(Chofer chofer)
-DONE        login(String usserName, String pass)
-PREGUNTA    logout()
-DONE        pagarYFinalizarViaje(int calificacion)
-PREGUNTA    validarPedido(Pedido pedido)
-DONE        vehiculosOrdenadosPorPedido(Pedido pedido)
-*/
-package test.java.modelo;
+package modelo;
 
 
 import static org.junit.Assert.*;
@@ -30,9 +18,7 @@ public class EmpresaVaciaTest {
     Pedido pedido;
     Chofer chofer;
     Vehiculo auto;
-    
-    // son creados pero no agregados a la empresa
-    //obtenemos las excepciones choferNotDisponible, etc..
+    // son instanciados pero no agregados a la empresa.
 
     @Before
     public void startUp(){
@@ -82,6 +68,16 @@ public class EmpresaVaciaTest {
     }
 
     @Test
+    public void loginAdminTest(){
+        try{
+            empresa.login("admin","admin");
+        }
+        catch(Exception e){
+             fail("Excepcion no esperada");
+        }
+    }
+
+    @Test
     public void logoutTest(){
         try{
             empresa.logout();
@@ -89,24 +85,16 @@ public class EmpresaVaciaTest {
         catch (Exception ex){
             fail("Excepcion lanzada");
         }
-        //DUDA:que asserto deberiamos usar???
     }
     
-
-    //@Test
-    // public void logoutTest(){
-    //
-    //}
     @Test 
     public void pagarYFinalizarViajeTest(){
-        //este metodo no deberia testearse en 
         int calificacion=3;
         try{
             empresa.pagarYFinalizarViaje(calificacion);
         }
         catch(ClienteSinViajePendienteException ex){
-            //el mensaje deberia ser CLIENTE_SIN_VIAJE_PENDIENTE segun el javadoc pero no lo es..
-            assertEquals("Cliente Sin Viaje Pendiente",ex.getMessage());
+            assertEquals(Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor(),ex.getMessage());
         }
     }
     @Test
@@ -147,7 +135,7 @@ public class EmpresaVaciaTest {
     
     public void vehiculosOrdenadosPorPedidoTest(){
         ArrayList <Vehiculo> listaVehiculos=empresa.vehiculosOrdenadosPorPedido(pedido);
-        assertTrue(listaVehiculos.isEmpty()); //DUDA: la lista que devuelve, sera una lista vacia? 
+        assertTrue(listaVehiculos.isEmpty()); 
     }
 
     @After
@@ -165,8 +153,7 @@ public class EmpresaVaciaTest {
         empresa.setVehiculosDesocupados(null);
         empresa.setViajesIniciados(null);
         empresa.setViajesTerminados(null);
-        
-        
+           
     }
 
 

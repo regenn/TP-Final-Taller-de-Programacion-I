@@ -3,7 +3,7 @@ package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;

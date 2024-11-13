@@ -2,7 +2,7 @@ package integracion;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import static org.mockito.Mockito.mock;//hay que instalar algo?
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import modeloDatos.*;
@@ -13,7 +13,7 @@ import controlador.*;
 import util.Mensajes;
 import GUI.FalsoOptionPane;
 import GUI.TestUtils;
-import vista.Ventana;//??
+import vista.Ventana;
 import util.Constantes;
 
 import javax.swing.JPanel;
@@ -28,7 +28,6 @@ public class LogoutTest {
 
     @Before
     public void setUp(){
-
         empresa=Empresa.getInstance();
         controlador= new Controlador();
         op = new FalsoOptionPane();
@@ -48,7 +47,6 @@ public class LogoutTest {
         when(ventana.getUsserName()).thenReturn("usuario1");
         when(ventana.getPassword()).thenReturn("contrasenia1");
         this.controlador.login();
-
     }
 
     @After
@@ -63,9 +61,5 @@ public class LogoutTest {
         assertNotNull(empresa.getUsuarioLogeado());
         this.controlador.logout();
         assertNull(empresa.getUsuarioLogeado());
-        //assertTrue("Deberia abrirse un nuevo panel de inicio de sesion",.isEnabled());
-        //panelLogin = (JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(),Constantes.PANEL_LOGIN);//
-		//Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
-        //Assert.assertTrue("deberia abrirse un PaneldeRegistro", panelLogin.isEnabled());
     }
 }

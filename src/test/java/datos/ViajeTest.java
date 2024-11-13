@@ -1,4 +1,4 @@
-package test.java.datos;
+package datos;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -127,5 +127,3 @@ public class ViajeTest {
 
 
 }
-
-

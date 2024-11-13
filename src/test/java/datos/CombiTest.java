@@ -1,4 +1,4 @@
-package test.java.datos;
+package datos;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -99,18 +99,7 @@ public class CombiTest {
             fail("getPuntajePedido no funciona correctamente en Combi");
         }
     }
-
-    /*(@Test
-    public void getPuntajePedido10pasajerosTest(){
-        try{
-            assertEquals(null,combi1.getPuntajePedido(pedido2));
-            // 11 pasajeros, devuelve null
-        }
-        catch (Exception ex){
-            fail("getPuntajePedido no funciona correctamente en Combi");
-        }
-    }*/
-    
+  
     @Test
     public void getPuntajePedidoconMascotaTest(){ // con mascota en combi que no admite mascota
         try{

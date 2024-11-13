@@ -30,6 +30,19 @@ import controlador.*;
 import util.Constantes;
 import util.Mensajes;
 
+/*
+Metodo de la interfaz ActionListener. dependiendo el valor del actionCommand del parametro de tipo ActionEvent se invoca a los siguientes metodos:
+Constantes.CERRAR_SESION_CLIENTE or Constantes.CERRAR_SESION_ADMIN se invoca a logout()
+Constantes.LOGIN) se invoca a login()
+Constantes.REG_BUTTON_REGISTRAR se invoca a registrar()
+Constantes.NUEVO_PEDIDO se invoca a nuevoPedido()
+Constantes.CALIFICAR_PAGAR se invoca a calificarPagar()
+Constantes.NUEVO_CHOFER se invoca a nuevoChofer()
+Constantes.NUEVO_VEHICULO se invoca a nuevoVehiculo()
+Constantes.NUEVO_VIAJE se invoca a nuevoViaje()
+Cualquier otro valor es ignorado.
+ */
+
 public class ActionPerformedTest {
     Empresa empresa;
     Controlador controlador;

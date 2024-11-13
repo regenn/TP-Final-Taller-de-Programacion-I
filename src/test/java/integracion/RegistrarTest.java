@@ -71,7 +71,7 @@ public class RegistrarTest {
             when(ventana.getRegPassword()).thenReturn("passNuevo");
             when(ventana.getRegConfirmPassword()).thenReturn("passOtra");
 
-            this.controlador.registrar();//pass y confirm no coinciden
+            this.controlador.registrar();
         } catch (Exception e){
         	assertEquals(Mensajes.PASS_NO_COINCIDE.getValor(), op.getMensaje());
         }
