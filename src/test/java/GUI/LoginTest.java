@@ -150,3 +150,4 @@ public class LoginTest {
 		robot.delay(500);
 		Assert.assertEquals(Mensajes.PASS_ERRONEO.getValor(), op.getMensaje());
 	}
+}
