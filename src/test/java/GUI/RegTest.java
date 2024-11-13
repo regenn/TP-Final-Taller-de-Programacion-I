@@ -1,12 +1,12 @@
 package GUI;
 
-
 import static org.junit.Assert.*;
 
 import java.awt.AWTException;
 import java.awt.Robot;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.junit.After;
@@ -20,7 +20,6 @@ import controlador.Controlador;
 import modeloNegocio.Empresa;
 import util.Constantes;
 import vista.Ventana;
-
 
 public class RegTest {
 	protected Robot robot;
@@ -167,8 +166,7 @@ public class RegTest {
 
 		TestUtils.clickComponent(registroButton, robot);
 		robot.delay(TestUtils.getDelay());
-		registroButton = (JButton) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.REGISTRAR);
-		Assert.assertTrue("deberia abrirse un PaneldeRegistro", (registroButton instanceof JButton));
+		Assert.assertTrue("deberia haber logeado",((JPanel) TestUtils.getComponentForName((Ventana) controlador.getVista(), Constantes.PANEL_LOGIN)).isEnabled());
 	}
 
 	@Test
